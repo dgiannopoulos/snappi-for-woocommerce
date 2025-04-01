@@ -1,5 +1,5 @@
 === Snappi Pay Later ===
-Contributors: Web Expert
+Contributors: Snappi
 Donate link: https://www.snappibank.com/
 Tags: ecommerce, woocommerce, payment gateway
 Requires at least: 4.6
