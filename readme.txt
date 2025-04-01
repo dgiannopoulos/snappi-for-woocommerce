@@ -33,10 +33,10 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 4. Μόλις το πρόσθετο ανέβει με επιτυχία στην ιστοσελίδα σας θα σας ζητηθεί να το ενεργοποιήσετε. Σε αυτό το σημείο θα επιλέξετε το κουμπί ενεργοποίησης και το προσθετό σας έχει εγκατασταθεί και ενεργοποιηθεί με επιτυχία.
 5. Θα πρέπει να καταχωρήσετε τα εξής στοιχεία στη Snappi
 
- - Website url	    http(s)://www.domain.gr/
- - Referrer page	http(s)://www.domain.gr/checkout/
- - Success Callback/Redirect URL	    http(s)://www.domain.gr/wc-api/WC_Snappi_Gateway?action=success&id={orderIdentifier}
- - Fail Callback/Redirect URL	    http(s)://www.domain.gr/wc-api/WC_Snappi_Gateway?action=fail&id={orderIdentifier}
+ - Website url: http(s)://www.domain.gr/
+ - Referrer page: http(s)://www.domain.gr/checkout/
+ - Success Callback/Redirect URL: http(s)://www.domain.gr/wc-api/WC_Snappi_Gateway?action=success&id={orderIdentifier}
+ - Fail Callback/Redirect URL: http(s)://www.domain.gr/wc-api/WC_Snappi_Gateway?action=fail&id={orderIdentifier}
 
 == Changelog ==
 
