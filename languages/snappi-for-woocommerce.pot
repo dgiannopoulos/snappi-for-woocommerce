@@ -1,0 +1,159 @@
+# Copyright (C) 2025 Web Expert
+# This file is distributed under the Web Expert license.
+msgid ""
+msgstr ""
+"Project-Id-Version: Snappi Pay Later 1.0.0\n"
+"Report-Msgid-Bugs-To: https://woocommerce.com/my-account/create-a-ticket/\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-04-01T09:17:22+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.6.0\n"
+"language-team: LANGUAGE <EMAIL@ADDRESS>\n"
+"X-Domain: snappi-for-woocommerce\n"
+
+#. Plugin Name of the plugin
+#: includes/class-snappi-for-woocommerce-gateway.php:16
+#: includes/class-snappi-for-woocommerce-gateway.php:31
+#: includes/class-snappi-for-woocommerce-gateway.php:58
+#: resources/js/frontend/index.js:14
+msgid "Snappi Pay Later"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://www.snappibank.com"
+msgstr ""
+
+#. Description of the plugin
+msgid "Snappi Pay Later allows you to accept payments through various credit cards such as Maestro, Mastercard, and Visa on your Woocommerce Site."
+msgstr ""
+
+#. Author of the plugin
+msgid "Web Expert"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://www.webexpert.gr"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:12
+msgid "Proceed for payment"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:15
+#: includes/class-snappi-for-woocommerce-gateway.php:32
+#: includes/class-snappi-for-woocommerce-gateway.php:65
+msgid "Shop now and pay in 4 installments. No interest, no credit card, no hidden fees. Enjoy the flexibility and safety of Snappi, the 1st Greek EU-licensed neobank."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:47
+msgid "Enable/Disable"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:49
+msgid "Enable Snappi Pay Later"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:50
+msgid "Enable or disable the gateway."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:55
+msgid "Title"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:57
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:62
+msgid "Description"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:64
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:69
+msgid "Instructions"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:71
+msgid "Instructions that will be added to the thank you page and emails."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:76
+msgid "Application ID"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:78
+msgid "Enter your Snappi Application ID"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:83
+msgid "Subscription Key"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:85
+msgid "Enter your Snappi Subscription Key"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:90
+msgid "API environment"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:92
+msgid "Environment"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:93
+msgid "This control enables test or live APi environment"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:96
+msgid "Sandbox"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:97
+msgid "Live"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:147
+msgid "Snappi is not available."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:229
+msgid "Order payment failed."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:234
+msgid "Order payment failed. To make a successful payment using Snappi, please review the gateway settings."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:268
+msgid "Payment Via Snappi."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:269
+msgid "Thank you for choosing us for your online shopping.<br />Your transaction was successful, payment was received.<br />Your order is currently being processed."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:277
+#: includes/class-snappi-for-woocommerce-gateway.php:307
+msgid "Payment vis Snappi failed. Please try again."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:298
+msgid "Payment vis Snappi."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:299
+msgid "Thank you for choosing us for your online shopping. <br />However, the transaction wasn't successful, payment wasn't received."
+msgstr ""
+
+#: snappi-for-woocommerce-gateway.php:77
+msgid "Settings"
+msgstr ""

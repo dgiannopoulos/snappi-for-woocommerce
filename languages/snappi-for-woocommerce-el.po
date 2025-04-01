@@ -1,0 +1,226 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Snappi Pay Later\n"
+"POT-Creation-Date: 2025-04-01 12:04+0300\n"
+"PO-Revision-Date: 2025-04-01 12:04+0300\n"
+"Last-Translator: Dimitrios Selimidis <ds@webexpert.gr>\n"
+"Language-Team: Dimitrios Selimidis <ds@webexpert.gr>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: snappi-for-woocommerce-gateway.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:12
+msgid "Proceed for payment"
+msgstr "Μετάβαση για πληρωμή"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:15
+#: includes/class-snappi-for-woocommerce-gateway.php:32
+#: includes/class-snappi-for-woocommerce-gateway.php:65
+msgid ""
+"Shop now and pay in 4 installments. No interest, no credit card, no hidden "
+"fees. Enjoy the flexibility and safety of Snappi, the 1st Greek EU-licensed "
+"neobank."
+msgstr ""
+"Αγόρασε τώρα και πλήρωσε σε 4 άτοκες δόσεις, χωρίς πιστωτική κάρτα και χωρίς "
+"κρυφές χρεώσεις. Κάνε ασφαλείς, ευέλικτες αγορές με τη Snappi, την πρώτη "
+"ελληνική neobank με άδεια από την ΕΚΤ."
+
+#. Plugin Name of the plugin/theme
+#: includes/class-snappi-for-woocommerce-gateway.php:16
+#: includes/class-snappi-for-woocommerce-gateway.php:31
+#: includes/class-snappi-for-woocommerce-gateway.php:58
+#: resources/js/frontend/index.js:15
+msgid "Snappi Pay Later"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:47
+msgid "Enable/Disable"
+msgstr "Ενεργοποίηση/Απενεργοποίηση"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:49
+msgid "Enable Snappi Pay Later"
+msgstr "Ενεργοποιήστε το Snappi Pay Later"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:50
+msgid "Enable or disable the gateway."
+msgstr "Ενεργοποίηση ή απενεργοποίηση της πύλης πληρωμών."
+
+#: includes/class-snappi-for-woocommerce-gateway.php:55
+msgid "Title"
+msgstr "Τίτλος"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:57
+msgid "This controls the title which the user sees during checkout."
+msgstr "Ελέγχει το τίτλο που εμφανίζεται στο χρήστη κατά τη πληρωμή."
+
+#: includes/class-snappi-for-woocommerce-gateway.php:62
+msgid "Description"
+msgstr "Περιγραφή"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:64
+msgid "This controls the description which the user sees during checkout."
+msgstr "Ελέγχει την περιγραφή που εμφανίζεται στον χρήστη κατά τη πληρωμή."
+
+#: includes/class-snappi-for-woocommerce-gateway.php:69
+msgid "Instructions"
+msgstr "Οδηγίες"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:71
+msgid "Instructions that will be added to the thank you page and emails."
+msgstr ""
+"Οδηγίες που θα προστεθούν στη σελίδα επιβεβαίωσης της παραγγελίας (thank you "
+"page) και στα emails."
+
+#: includes/class-snappi-for-woocommerce-gateway.php:76
+msgid "Application ID"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:78
+msgid "Enter your Snappi Application ID"
+msgstr "Εισαγάγετε το Application ID της Snappi"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:83
+msgid "Subscription Key"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:85
+msgid "Enter your Snappi Subscription Key"
+msgstr "Εισαγάγετε το Subscription Key της Snappi"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:90
+msgid "API environment"
+msgstr "Περιβάλλον"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:92
+#, fuzzy
+#| msgid "API environment"
+msgid "Environment"
+msgstr "Περιβάλλον"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:93
+msgid "This control enables test or live APi environment"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:96
+msgid "Sandbox"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:97
+msgid "Live"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:147
+msgid "Snappi is not available."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:229
+msgid "Order payment failed."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:234
+msgid ""
+"Order payment failed. To make a successful payment using Snappi, please "
+"review the gateway settings."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:268
+msgid "Payment Via Snappi."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:269
+msgid ""
+"Thank you for choosing us for your online shopping.<br />Your transaction "
+"was successful, payment was received.<br />Your order is currently being "
+"processed."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:277
+#: includes/class-snappi-for-woocommerce-gateway.php:307
+msgid "Payment vis Snappi failed. Please try again."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:298
+msgid "Payment vis Snappi."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:299
+msgid ""
+"Thank you for choosing us for your online shopping. <br />However, the "
+"transaction wasn't successful, payment wasn't received."
+msgstr ""
+
+#: includes/update/Puc/v4p10/Plugin/Ui.php:54
+msgid "View details"
+msgstr ""
+
+#: includes/update/Puc/v4p10/Plugin/Ui.php:77
+#, php-format
+msgid "More information about %s"
+msgstr ""
+
+#: includes/update/Puc/v4p10/Plugin/Ui.php:128
+msgid "Check for updates"
+msgstr ""
+
+#: includes/update/Puc/v4p10/Plugin/Ui.php:213
+#, php-format
+msgctxt "the plugin title"
+msgid "The %s plugin is up to date."
+msgstr ""
+
+#: includes/update/Puc/v4p10/Plugin/Ui.php:215
+#, php-format
+msgctxt "the plugin title"
+msgid "A new version of the %s plugin is available."
+msgstr ""
+
+#: includes/update/Puc/v4p10/Plugin/Ui.php:217
+#, php-format
+msgctxt "the plugin title"
+msgid "Could not determine if updates are available for %s."
+msgstr ""
+
+#: includes/update/Puc/v4p10/Plugin/Ui.php:223
+#, php-format
+msgid "Unknown update checker status \"%s\""
+msgstr ""
+
+#: includes/update/Puc/v4p10/Vcs/PluginUpdateChecker.php:98
+msgid "There is no changelog available."
+msgstr ""
+
+#: snappi-for-woocommerce-gateway.php:77
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+#. Plugin URI of the plugin/theme
+msgid "https://www.snappibank.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Snappi Pay Later allows you to accept payments through various credit cards "
+"such as Maestro, Mastercard, and Visa on your Woocommerce Site."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Web Expert"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.webexpert.gr"
+msgstr ""
+
+#~ msgid "Installments"
+#~ msgstr "Αριθμός δόσεων"
