@@ -6,8 +6,8 @@ Requires at least: 4.6
 Tested up to: 6.7.2
 Stable tag: 1.0.0
 Requires PHP: 7.0
-License: Web Expert license
-License URI: https://www.webexpert.gr/adeia-xrisis-logismikou
+License: GNU General Public License v3.
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Το πρόσθετο Snappi Pay Later προσθέτει στην ιστοσελίδα σας την πύλη πληρωμών της Snappi για το WooCommerce.
 
