@@ -93,8 +93,8 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 				'description' => __('This control enables test or live APi environment', 'snappi-for-woocommerce'),
 				'desc_tip' => true,
 				'options'     => array(
-					'sandbox' => __( 'Sandbox', 'snappi-for-woocommerce' ),
-					'live' => __( 'Live', 'snappi-for-woocommerce' ),
+					'sandbox' => __( 'UAT', 'snappi-for-woocommerce' ),
+					'live' => __( 'Production', 'snappi-for-woocommerce' ),
 				),
 				'default'     => 'sandbox',
 			)
@@ -122,9 +122,9 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 				);
 
 				if ($this->get_option('api_environment') == 'sandbox') {
-					$url = "https://bnpl-sandbox.snappibank.com.gr";
-				}else {
 					$url = "https://merchantbnpl.snappibank.com.gr";
+				}else {
+					$url = "https://merchantbnpl.snappibank.com";
 				}
 
 				// Make API request
