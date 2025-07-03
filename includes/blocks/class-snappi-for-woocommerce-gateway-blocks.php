@@ -79,7 +79,6 @@ final class Snappi_Pay_Later_Blocks_Support extends AbstractPaymentMethodType {
 			} else {
 				$cart_total = WC()->cart->get_total('');
 			}
-			$this->gateway->calculate_installments($cart_total);
 		}
 
 		$settings = [
