@@ -124,7 +124,7 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 				if ($this->get_option('api_environment') == 'sandbox') {
 					$url = "https://merchantbnpl.snappibank.com.gr";
 				}else {
-					$url = "https://merchantbnpl.snappibank.com";
+					$url = "https://merchantbnplapi.snappibank.com";
 				}
 
 				// Make API request
