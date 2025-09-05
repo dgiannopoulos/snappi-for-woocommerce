@@ -245,6 +245,57 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 		);
 	}
 
+	public function is_available() {
+		if ( ! parent::is_available() ) {
+			return false;
+		}
+
+		$applicationID = $this->get_option( 'applicationID' );
+		$subscriptionKey = $this->get_option( 'subscriptionKey' );
+
+		try {
+			if ( !empty($applicationID) && !empty($subscriptionKey) ) {
+				$headers = array(
+					'Accept' => 'application/json',
+					'X-Application-ID' => $this->get_option('applicationID'),
+					'Ocp-Apim-Subscription-Key' => $this->get_option('subscriptionKey')
+				);
+
+				if ($this->get_option('api_environment') == 'sandbox') {
+					$url = "https://merchantbnpl.snappibank.com.gr";
+				}else {
+					$url = "https://merchantbnplapi.snappibank.com";
+				}
+
+				// Make API request
+				$response = wp_remote_get("{$url}/merchant/checkbasketeligibilityforbnpl?basketValue=".floatval(WC()->cart->get_total( 'edit' )), array(
+					'headers' => $headers,
+					'timeout' => 10, // Adjust timeout if needed
+				));
+
+				// Handle response errors
+				if (is_wp_error($response)) {
+					throw new Exception( __($response->get_error_message(),'snappi-for-woocommerce'));
+				}
+
+				// Retrieve and decode the response
+				$body = wp_remote_retrieve_body($response);
+				$data = json_decode($body, true);
+
+
+				if (empty($data['isBNPLEligible'])) {
+					return false;
+				}
+
+				return true;
+			} else {
+				return false;
+			}
+		} catch (\Throwable $th) {
+			return false;
+		}
+	}
+
 	function check_snappi_response() {
 		global $wpdb;
 		$order=null;
