@@ -4,7 +4,7 @@ Donate link: https://www.snappibank.com/
 Tags: ecommerce, woocommerce, payment gateway
 Requires at least: 4.6
 Tested up to: 6.8.2
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 Requires PHP: 7.0
 License: GNU General Public License v3.
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -39,6 +39,9 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
  - Fail Callback/Redirect URL: http(s)://www.domain.gr/wc-api/WC_Snappi_Gateway?action=fail&id={orderIdentifier}
 
 == Changelog ==
+
+= 1.0.5 =
+* Διόρθωση: Fatal fix
 
 = 1.0.4 =
 * Διόρθωση: Έλεγχος διαθεσιμότητας κατά το checkout

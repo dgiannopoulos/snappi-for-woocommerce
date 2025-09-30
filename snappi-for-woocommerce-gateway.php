@@ -3,7 +3,7 @@
 Plugin Name: Snappi Pay Later
 Plugin URI:  https://www.snappibank.com
 Description: Snappi Pay Later allows you to accept payments through various credit cards such as Maestro, Mastercard, and Visa on your Woocommerce Site.
-Version: 1.0.4
+Version: 1.0.5
 Requires at least: 4.0
 Requires PHP:      7.0
 Author: Web Expert
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define('Snappi_Pay_Later_Version', '1.0.4');
+define('Snappi_Pay_Later_Version', '1.0.5');
 
 require plugin_dir_path( __FILE__ ).'includes/update/plugin-update-checker.php';
 $myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
