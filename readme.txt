@@ -40,6 +40,9 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 == Changelog ==
 
+= 1.0.6 =
+* Διόρθωση: API call, σε checkout
+
 = 1.0.5 =
 * Διόρθωση: Fatal fix
 

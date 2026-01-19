@@ -250,6 +250,14 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 			return false;
 		}
 
+		if ( ! is_checkout() ) {
+			return false;
+		}
+
+		if ( WC()->cart === null ) {
+			return false;
+		}
+
 		$applicationID = $this->get_option( 'applicationID' );
 		$subscriptionKey = $this->get_option( 'subscriptionKey' );
 
@@ -270,7 +278,7 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 				// Make API request
 				$response = wp_remote_get("{$url}/merchant/checkbasketeligibilityforbnpl?basketValue=".floatval(WC()->cart->get_total( 'edit' )), array(
 					'headers' => $headers,
-					'timeout' => 10, // Adjust timeout if needed
+					'timeout' => 5,
 				));
 
 				// Handle response errors
