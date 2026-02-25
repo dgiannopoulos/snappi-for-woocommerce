@@ -59,7 +59,7 @@ final class Snappi_Pay_Later_Blocks_Support extends AbstractPaymentMethodType {
 		);
 
 		if ( function_exists( 'wp_set_script_translations' ) ) {
-			wp_set_script_translations( 'woocommerce-snappi-payment-blocks', 'webexpert-woocommerce-snappi-payment-gateway', Snappi_Pay_Later::plugin_abspath() . 'languages/' );
+			wp_set_script_translations( 'woocommerce-snappi-payment-blocks', 'snappi-for-woocommerce', Snappi_Pay_Later::plugin_abspath() . 'languages/' );
 		}
 
 		return [ 'woocommerce-snappi-payment-blocks' ];
@@ -71,16 +71,6 @@ final class Snappi_Pay_Later_Blocks_Support extends AbstractPaymentMethodType {
 	 * @return array
 	 */
 	public function get_payment_method_data() {
-		if (!is_admin() && is_checkout()) {
-			if (is_wc_endpoint_url('order-pay')) {
-				$order_id = get_query_var('order-pay');
-				$order = wc_get_order($order_id);
-				$cart_total = $order->get_total();
-			} else {
-				$cart_total = WC()->cart->get_total('');
-			}
-		}
-
 		$settings = [
 			'id'          => $this->gateway->id,
 			'title'       => $this->get_setting( 'title' ),
