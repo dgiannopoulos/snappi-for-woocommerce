@@ -42,7 +42,7 @@ msgstr ""
 #: includes/class-snappi-for-woocommerce-gateway.php:58
 #: resources/js/frontend/index.js:15
 msgid "Snappi Pay Later"
-msgstr ""
+msgstr "Snappi Pay Later"
 
 #: includes/class-snappi-for-woocommerce-gateway.php:47
 msgid "Enable/Disable"
@@ -84,7 +84,7 @@ msgstr ""
 
 #: includes/class-snappi-for-woocommerce-gateway.php:76
 msgid "Application ID"
-msgstr ""
+msgstr "Application ID"
 
 #: includes/class-snappi-for-woocommerce-gateway.php:78
 msgid "Enter your Snappi Application ID"
@@ -92,7 +92,7 @@ msgstr "Εισαγάγετε το Application ID της Snappi"
 
 #: includes/class-snappi-for-woocommerce-gateway.php:83
 msgid "Subscription Key"
-msgstr ""
+msgstr "Κλειδί Συνδρομής"
 
 #: includes/class-snappi-for-woocommerce-gateway.php:85
 msgid "Enter your Snappi Subscription Key"
@@ -109,56 +109,63 @@ msgid "Environment"
 msgstr "Περιβάλλον"
 
 #: includes/class-snappi-for-woocommerce-gateway.php:93
-msgid "This control enables test or live APi environment"
-msgstr ""
+msgid "This control enables test or live API environment"
+msgstr "Επιλέξτε περιβάλλον δοκιμής ή παραγωγής"
 
 #: includes/class-snappi-for-woocommerce-gateway.php:96
-msgid "Sandbox"
-msgstr ""
+msgid "UAT"
+msgstr "Δοκιμαστικό"
 
 #: includes/class-snappi-for-woocommerce-gateway.php:97
-msgid "Live"
-msgstr ""
+msgid "Production"
+msgstr "Παραγωγή"
 
 #: includes/class-snappi-for-woocommerce-gateway.php:147
 msgid "Snappi is not available."
-msgstr ""
+msgstr "Η Snappi δεν είναι διαθέσιμη."
 
 #: includes/class-snappi-for-woocommerce-gateway.php:229
 msgid "Order payment failed."
-msgstr ""
+msgstr "Η πληρωμή της παραγγελίας απέτυχε."
 
 #: includes/class-snappi-for-woocommerce-gateway.php:234
 msgid ""
 "Order payment failed. To make a successful payment using Snappi, please "
 "review the gateway settings."
 msgstr ""
+"Η πληρωμή της παραγγελίας απέτυχε. Για να ολοκληρωθεί η πληρωμή μέσω "
+"Snappi, ελέγξτε τις ρυθμίσεις της πύλης πληρωμών."
 
-#: includes/class-snappi-for-woocommerce-gateway.php:268
-msgid "Payment Via Snappi."
-msgstr ""
+#: includes/class-snappi-for-woocommerce-gateway.php:289
+msgid "Payment via Snappi."
+msgstr "Πληρωμή μέσω Snappi."
 
-#: includes/class-snappi-for-woocommerce-gateway.php:269
+#: includes/class-snappi-for-woocommerce-gateway.php:290
 msgid ""
 "Thank you for choosing us for your online shopping.<br />Your transaction "
 "was successful, payment was received.<br />Your order is currently being "
 "processed."
 msgstr ""
-
-#: includes/class-snappi-for-woocommerce-gateway.php:277
-#: includes/class-snappi-for-woocommerce-gateway.php:307
-msgid "Payment vis Snappi failed. Please try again."
-msgstr ""
+"Σας ευχαριστούμε που μας επιλέξατε για τις ηλεκτρονικές σας αγορές.<br />"
+"Η συναλλαγή σας ολοκληρώθηκε επιτυχώς και η πληρωμή ελήφθη.<br />"
+"Η παραγγελία σας βρίσκεται σε επεξεργασία."
 
 #: includes/class-snappi-for-woocommerce-gateway.php:298
-msgid "Payment vis Snappi."
-msgstr ""
+#: includes/class-snappi-for-woocommerce-gateway.php:326
+msgid "Payment via Snappi failed. Please try again."
+msgstr "Η πληρωμή μέσω Snappi απέτυχε. Παρακαλούμε δοκιμάστε ξανά."
 
-#: includes/class-snappi-for-woocommerce-gateway.php:299
+#: includes/class-snappi-for-woocommerce-gateway.php:319
+msgid "Payment via Snappi failed."
+msgstr "Η πληρωμή μέσω Snappi απέτυχε."
+
+#: includes/class-snappi-for-woocommerce-gateway.php:320
 msgid ""
 "Thank you for choosing us for your online shopping. <br />However, the "
 "transaction wasn't successful, payment wasn't received."
 msgstr ""
+"Σας ευχαριστούμε που μας επιλέξατε για τις ηλεκτρονικές σας αγορές. "
+"<br />Ωστόσο, η συναλλαγή δεν ήταν επιτυχής και η πληρωμή δεν ελήφθη."
 
 #: includes/update/Puc/v4p10/Plugin/Ui.php:54
 msgid "View details"
