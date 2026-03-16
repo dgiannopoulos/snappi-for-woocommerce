@@ -10,8 +10,8 @@ Author: Web Expert
 Author URI: http://www.webexpert.gr
 License: GPLv2 or later
 Text Domain: snappi-for-woocommerce
-WC requires at least: 3.0
-WC tested up to: 10.5.2
+WC requires at least: 5.0
+WC tested up to: 10.5.3
 */
 
 // Exit if accessed directly.
