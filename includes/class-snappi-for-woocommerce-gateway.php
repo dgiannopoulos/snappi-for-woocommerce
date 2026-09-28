@@ -32,6 +32,11 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 	public function admin_options() {
 		echo '<h3>' . __('Snappi Pay Later', 'snappi-for-woocommerce') . '</h3>';
 		echo '<p>' . __('Shop now and pay in 4 installments. No interest, no credit card, no hidden fees. Enjoy the flexibility and safety of Snappi, the 1st Greek EU-licensed neobank.', 'snappi-for-woocommerce') . '</p>';
+
+		echo '<p>' . esc_html__( 'Register these two URLs in the Snappi portal exactly as shown:', 'snappi-for-woocommerce' ) . '</p>';
+		echo '<p><code>' . esc_html( $this->get_callback_url( 'success' ) ) . '</code><br />';
+		echo '<code>' . esc_html( $this->get_callback_url( 'fail' ) ) . '</code></p>';
+
 		echo '<table class="form-table">';
 		$this->generate_settings_html();
 		echo '</table>';
@@ -88,6 +93,21 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 				'default' => '',
 				'desc_tip' => true
 			),
+			'enforce_verification_key' => array(
+				'title' => __('Callback security key', 'snappi-for-woocommerce'),
+				'type' => 'checkbox',
+				'label' => __('Reject payment callbacks that do not carry this site\'s security key', 'snappi-for-woocommerce'),
+				'description' => __('Enable this only after the callback URLs shown above have been saved in the Snappi portal, otherwise every payment confirmation will be rejected.', 'snappi-for-woocommerce'),
+				'default' => 'no'
+			),
+			'verification_key' => array(
+				'title' => __('Security key', 'snappi-for-woocommerce'),
+				'type' => 'text',
+				'description' => __('Generated automatically. Changing it requires updating the callback URLs in the Snappi portal.', 'snappi-for-woocommerce'),
+				'default' => '',
+				'desc_tip' => true,
+				'custom_attributes' => array( 'readonly' => 'readonly' ),
+			),
 			'api_environment' => array(
 				'title' => __('API environment', 'snappi-for-woocommerce'),
 				'type' => 'select',
@@ -101,6 +121,48 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 				'default'     => 'sandbox',
 			)
 		);
+	}
+
+	/**
+	 * Per-site secret embedded in the callback URLs registered with Snappi.
+	 *
+	 * Snappi substitutes {orderIdentifier} in a URL template the merchant configures and passes
+	 * everything else through verbatim without re-encoding (confirmed 2026-09-28), so a secret we
+	 * put in that template comes back with every callback. Without it, anyone who can obtain an
+	 * orderIdentifier can mark an order paid.
+	 */
+	protected function get_verification_key() {
+		$key = $this->get_option( 'verification_key' );
+
+		if ( empty( $key ) ) {
+			$key = wp_generate_password( 32, false, false );
+			$this->update_option( 'verification_key', $key ); // also refreshes $this->settings.
+		}
+
+		return $key;
+	}
+
+	protected function get_callback_url( $action ) {
+		$base = add_query_arg(
+			array(
+				'action' => $action,
+				'k'      => $this->get_verification_key(),
+			),
+			WC()->api_request_url( 'WC_Snappi_Gateway' )
+		);
+
+		// Appended raw: Snappi substitutes the placeholder, so it must not be URL-encoded.
+		return $base . '&id={orderIdentifier}';
+	}
+
+	protected function callback_key_is_valid() {
+		if ( 'yes' !== $this->get_option( 'enforce_verification_key', 'no' ) ) {
+			return true;
+		}
+
+		$supplied = isset( $_GET['k'] ) ? sanitize_text_field( wp_unslash( $_GET['k'] ) ) : '';
+
+		return '' !== $supplied && hash_equals( $this->get_verification_key(), $supplied );
 	}
 
 	protected function check_settings() {
@@ -176,15 +238,20 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 				);
 			}
 
-			// Create basket
-			$orderIdentifier = $order->get_order_number() . "-" . time();
+			// Create basket.
+			// The identifier keeps the historic "<order number>-<unix time>" prefix so Snappi-side
+			// reconciliation still parses, plus a random alphanumeric suffix: the identifier is the
+			// only thing the callback carries, so it must not be derivable from the order number.
+			// Snappi confirmed (2026-09-28) there is no length limit and alphanumerics are accepted.
+			$orderIdentifier = $order->get_order_number() . "-" . time() . "-" . wp_generate_password( 16, false, false );
+			$requestId       = wp_generate_uuid4();
 			$headers['Content-Type'] = 'application/json';
 
 			$response = wp_remote_post("{$url}/createbasket", array(
 				'headers' => $headers,
 				'body'    => json_encode(array(
 					"basketValue"     => floatval($order->get_total()),
-					"requestId"       => wp_generate_uuid4(),
+					"requestId"       => $requestId,
 					"orderIdentifier" => $orderIdentifier,
 					"basketProducts"  => $basket_products,
 					"Merchant Data"   => $order->get_formatted_billing_full_name(),
@@ -200,12 +267,18 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 
 			$response_body = json_decode(wp_remote_retrieve_body($response), true);
 			$order->update_meta_data('_snappi_orderIdentifier', $orderIdentifier);
+			$order->update_meta_data('_snappi_requestId', $requestId);
 			$order->save();
 
 			if (!empty($response_body) && !empty($response_body['redirectUrl'])) {
-				$order->update_meta_data('_snappi_requestId', $response_body['redirectUrl']);
-				$order->update_meta_data('_snappi_basketId', $response_body['basketId']);
-				$order->update_meta_data('_snappi_qrCodeData', $response_body['qrCodeData']);
+				// _snappi_requestId used to hold the redirect URL, which made reconciliation by
+				// requestId impossible. The URL now lives under its own key; on orders created
+				// before 1.0.8 _snappi_requestId still contains an "https://..." value.
+				$order->update_meta_data('_snappi_redirectUrl', $response_body['redirectUrl']);
+				$order->update_meta_data('_snappi_basketId', isset($response_body['basketId']) ? $response_body['basketId'] : '');
+				$order->update_meta_data('_snappi_qrCodeData', isset($response_body['qrCodeData']) ? $response_body['qrCodeData'] : '');
+				// Snappi expire the QR after 15 minutes; recorded for support and reconciliation.
+				$order->update_meta_data('_snappi_basketCreatedAt', time());
 				$order->save();
 
 				$result       = 'success';
@@ -271,65 +344,187 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 		}
 	}
 
+	/**
+	 * Is this order one that legitimately opened a Snappi basket and is still waiting for it?
+	 *
+	 * @param WC_Order $order Order to test.
+	 * @return bool
+	 */
+	protected function order_awaits_snappi_payment( $order ) {
+		if ( $this->id !== $order->get_payment_method() ) {
+			return false;
+		}
+
+		if ( '' === (string) $order->get_meta( '_snappi_basketId' ) ) {
+			return false;
+		}
+
+		// Mirror WooCommerce's own list rather than inventing one. It includes 'cancelled' on
+		// purpose: "Hold stock (minutes)" auto-cancels unpaid pending orders, and a customer
+		// paying by QR on their phone can cross that window. Rejecting those would leave a paid
+		// order cancelled.
+		$valid_statuses = apply_filters(
+			'woocommerce_valid_order_statuses_for_payment_complete',
+			array( 'on-hold', 'pending', 'failed', 'cancelled' ),
+			$order
+		);
+
+		return $order->has_status( $valid_statuses );
+	}
+
+	/**
+	 * Resolve the order that a Snappi orderIdentifier belongs to.
+	 *
+	 * Deliberately a direct $wpdb lookup. wc_get_orders()/WP_Query meta filters are NOT reliable
+	 * here:
+	 *   - the legacy (post-based) order data store silently DROPS `meta_query`
+	 *     (WC_Data_Store_WP::get_wp_query_args() skips the key; WC >= 9.2 also fires
+	 *     wc_doing_it_wrong "Order query argument (meta_query) is not supported"), so the query
+	 *     degrades to "the newest orders of the whole shop";
+	 *   - a theme/plugin on pre_get_posts that calls $query->set( 'meta_query', ... ) replaces
+	 *     ours outright.
+	 * Either way an unrelated order would be handed to a code path that completes a payment.
+	 *
+	 * @param string $identifier Value of _snappi_orderIdentifier.
+	 * @return WC_Order|false
+	 */
+	protected function get_order_by_identifier( $identifier ) {
+		global $wpdb;
+
+		$identifier = (string) $identifier;
+
+		if ( '' === $identifier ) {
+			return false;
+		}
+
+		if ( class_exists( '\\Automattic\\WooCommerce\\Utilities\\OrderUtil' )
+			&& \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			$order_id = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT order_id FROM {$wpdb->prefix}wc_orders_meta WHERE meta_key = '_snappi_orderIdentifier' AND meta_value = %s ORDER BY order_id DESC LIMIT 1",
+					$identifier
+				)
+			);
+		} else {
+			$order_id = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_snappi_orderIdentifier' AND meta_value = %s ORDER BY post_id DESC LIMIT 1",
+					$identifier
+				)
+			);
+		}
+
+		if ( empty( $order_id ) ) {
+			return false;
+		}
+
+		$order = wc_get_order( (int) $order_id );
+
+		// Fail closed: re-read the identifier off the order itself before it can drive a write.
+		if ( ! $order || (string) $order->get_meta( '_snappi_orderIdentifier' ) !== $identifier ) {
+			return false;
+		}
+
+		return $order;
+	}
+
 	function check_snappi_response() {
-		$action     = isset($_GET['action']) ? sanitize_key($_GET['action']) : '';
-		$order_hash = isset($_GET['id']) ? sanitize_text_field($_GET['id']) : '';
+		$action     = isset( $_GET['action'] ) ? sanitize_key( $_GET['action'] ) : '';
+		$order_hash = isset( $_GET['id'] ) ? sanitize_text_field( wp_unslash( $_GET['id'] ) ) : '';
 
-        if ($action === 'success' && !empty($order_hash)) {
-            $orders = wc_get_orders([
-                'meta_query' => [[
-                    'key'     => '_snappi_orderIdentifier',
-                    'value'   => $order_hash,
-                    'compare' => '=',
-                ]],
-            ]);
+		if ( ! $this->callback_key_is_valid() ) {
+			wc_get_logger()->warning(
+				'Snappi callback rejected: missing or wrong security key (action=' . $action . ').',
+				array( 'source' => 'snappi-gateway' )
+			);
+			wc_add_notice( __( 'Payment via Snappi failed. Please try again.', 'snappi-for-woocommerce' ), 'error' );
+			wp_redirect( wc_get_checkout_url() );
+			exit;
+		}
 
-            if (!empty($orders)) {
-                $order = reset($orders);
-                $order->add_order_note(__('Payment via Snappi.','snappi-for-woocommerce'));
-                $message = __('Thank you for choosing us for your online shopping.<br />Your transaction was successful, payment was received.<br />Your order is currently being processed.', 'snappi-for-woocommerce');
-                $order->payment_complete( $order->get_meta('_snappi_basketId') );
-                wc_add_notice($message, 'success');
-				$order->update_meta_data('_snappi_finalized', 1);
-	            $order->save();
-                do_action('webexpert_woocommerce_snappi_success', $order->get_id());
-                wp_redirect($this->get_return_url($order));
-            } else {
-                wc_add_notice(__('Payment via Snappi failed. Please try again.', 'snappi-for-woocommerce'), 'error');
-                wp_redirect(wc_get_checkout_url());
-            }
-            exit;
+		if ( 'success' === $action && '' !== $order_hash ) {
+			$order = $this->get_order_by_identifier( $order_hash );
 
-        } elseif ($action === 'fail' && !empty($order_hash)) {
-            $orders = wc_get_orders([
-                'meta_query' => [[
-                    'key'     => '_snappi_orderIdentifier',
-                    'value'   => $order_hash,
-                    'compare' => '=',
-                ]],
-            ]);
+			if ( ! $order ) {
+				wc_get_logger()->warning(
+					'Snappi success callback for an unknown orderIdentifier.',
+					array( 'source' => 'snappi-gateway' )
+				);
+				wc_add_notice( __( 'Payment via Snappi failed. Please try again.', 'snappi-for-woocommerce' ), 'error' );
+				wp_redirect( wc_get_checkout_url() );
+				exit;
+			}
 
-            if (!empty($orders)) {
-                $order = reset($orders);
+			// Idempotency: claim the order BEFORE completing it, so a repeated callback cannot
+			// fire payment_complete() and the success hook twice.
+			if ( (int) $order->get_meta( '_snappi_finalized' ) === 1 ) {
+				wp_redirect( $this->get_return_url( $order ) );
+				exit;
+			}
 
-				if ((int) $order->get_meta('_snappi_finalized') === 1) {
-					return;
-				}
+			// Defence in depth: only ever complete an order that actually opened a Snappi basket
+			// and is still waiting for it. Nothing here should be able to touch a COD order.
+			if ( ! $this->order_awaits_snappi_payment( $order ) ) {
+				wc_get_logger()->warning(
+					sprintf(
+						'Snappi success callback ignored for order #%d (method=%s, status=%s, basketId=%s).',
+						$order->get_id(),
+						$order->get_payment_method(),
+						$order->get_status(),
+						$order->get_meta( '_snappi_basketId' )
+					),
+					array( 'source' => 'snappi-gateway' )
+				);
+				wp_redirect( $this->get_return_url( $order ) );
+				exit;
+			}
 
-                $order->add_order_note(__('Payment via Snappi failed.','snappi-for-woocommerce'));
-                $message = __('Thank you for choosing us for your online shopping. <br />However, the transaction wasn\'t successful, payment wasn\'t received.', 'snappi-for-woocommerce');
-                wc_add_notice($message, 'error');
-                do_action('webexpert_woocommerce_snappi_failed', $order->get_id());
-                $order->update_status('failed', '');
-                wp_redirect($order->get_cancel_order_url_raw());
-            } else {
-                wc_add_notice(__('Payment via Snappi failed. Please try again.', 'snappi-for-woocommerce'), 'error');
-                wp_redirect(wc_get_checkout_url());
-            }
-            exit;
-        } else {
-            wp_redirect(wc_get_checkout_url());
-            exit;
-        }
+			$order->update_meta_data( '_snappi_finalized', 1 );
+			$order->save();
+
+			$order->add_order_note( __( 'Payment via Snappi.', 'snappi-for-woocommerce' ) );
+			$order->payment_complete( $order->get_meta( '_snappi_basketId' ) );
+
+			wc_add_notice(
+				__( 'Thank you for choosing us for your online shopping.<br />Your transaction was successful, payment was received.<br />Your order is currently being processed.', 'snappi-for-woocommerce' ),
+				'success'
+			);
+
+			do_action( 'webexpert_woocommerce_snappi_success', $order->get_id() );
+
+			wp_redirect( $this->get_return_url( $order ) );
+			exit;
+		}
+
+		if ( 'fail' === $action && '' !== $order_hash ) {
+			$order = $this->get_order_by_identifier( $order_hash );
+
+			if ( ! $order ) {
+				wc_add_notice( __( 'Payment via Snappi failed. Please try again.', 'snappi-for-woocommerce' ), 'error' );
+				wp_redirect( wc_get_checkout_url() );
+				exit;
+			}
+
+			if ( (int) $order->get_meta( '_snappi_finalized' ) === 1 || ! $this->order_awaits_snappi_payment( $order ) ) {
+				wp_redirect( $this->get_return_url( $order ) );
+				exit;
+			}
+
+			$order->add_order_note( __( 'Payment via Snappi failed.', 'snappi-for-woocommerce' ) );
+
+			wc_add_notice(
+				__( 'Thank you for choosing us for your online shopping. <br />However, the transaction wasn\'t successful, payment wasn\'t received.', 'snappi-for-woocommerce' ),
+				'error'
+			);
+
+			do_action( 'webexpert_woocommerce_snappi_failed', $order->get_id() );
+			$order->update_status( 'failed', '' );
+
+			wp_redirect( $order->get_cancel_order_url_raw() );
+			exit;
+		}
+
+		wp_redirect( wc_get_checkout_url() );
+		exit;
 	}
 }

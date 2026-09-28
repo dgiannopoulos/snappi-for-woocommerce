@@ -157,3 +157,31 @@ msgstr ""
 #: snappi-for-woocommerce-gateway.php:77
 msgid "Settings"
 msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:36
+msgid "Register these two URLs in the Snappi portal exactly as shown:"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:97
+msgid "Callback security key"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:99
+msgid "Reject payment callbacks that do not carry this site's security key"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:100
+msgid ""
+"Enable this only after the callback URLs shown above have been saved in the "
+"Snappi portal, otherwise every payment confirmation will be rejected."
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:104
+msgid "Security key"
+msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:106
+msgid ""
+"Generated automatically. Changing it requires updating the callback URLs in "
+"the Snappi portal."
+msgstr ""
