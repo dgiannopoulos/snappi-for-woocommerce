@@ -34,6 +34,7 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 		echo '<p>' . __('Shop now and pay in 4 installments. No interest, no credit card, no hidden fees. Enjoy the flexibility and safety of Snappi, the 1st Greek EU-licensed neobank.', 'snappi-for-woocommerce') . '</p>';
 
 		echo '<p>' . esc_html__( 'Register these two URLs in the Snappi portal exactly as shown:', 'snappi-for-woocommerce' ) . '</p>';
+		echo '<p>' . esc_html__( 'Use the same URL for both the callback field and the redirect field.', 'snappi-for-woocommerce' ) . '</p>';
 		echo '<p><code>' . esc_html( $this->get_callback_url( 'success' ) ) . '</code><br />';
 		echo '<code>' . esc_html( $this->get_callback_url( 'fail' ) ) . '</code></p>';
 
@@ -153,6 +154,10 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 
 		// Appended raw: Snappi substitutes the placeholder, so it must not be URL-encoded.
 		return $base . '&id={orderIdentifier}';
+	}
+
+	protected function get_success_message() {
+		return __( 'Thank you for choosing us for your online shopping.<br />Your transaction was successful, payment was received.<br />Your order is currently being processed.', 'snappi-for-woocommerce' );
 	}
 
 	protected function callback_key_is_valid() {
@@ -457,7 +462,13 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 
 			// Idempotency: claim the order BEFORE completing it, so a repeated callback cannot
 			// fire payment_complete() and the success hook twice.
+			//
+			// Snappi confirmed (2026-10-01) that a payment produces TWO separate GET requests to
+			// this handler: one server-to-server and one from the customer's browser. Either can
+			// arrive first. Whichever claims the order completes the payment; the other lands here
+			// and only needs to show the customer the result.
 			if ( (int) $order->get_meta( '_snappi_finalized' ) === 1 ) {
+				wc_add_notice( $this->get_success_message(), 'success' );
 				wp_redirect( $this->get_return_url( $order ) );
 				exit;
 			}
@@ -485,10 +496,7 @@ class WC_Snappi_Gateway extends WC_Payment_Gateway {
 			$order->add_order_note( __( 'Payment via Snappi.', 'snappi-for-woocommerce' ) );
 			$order->payment_complete( $order->get_meta( '_snappi_basketId' ) );
 
-			wc_add_notice(
-				__( 'Thank you for choosing us for your online shopping.<br />Your transaction was successful, payment was received.<br />Your order is currently being processed.', 'snappi-for-woocommerce' ),
-				'success'
-			);
+			wc_add_notice( $this->get_success_message(), 'success' );
 
 			do_action( 'webexpert_woocommerce_snappi_success', $order->get_id() );
 

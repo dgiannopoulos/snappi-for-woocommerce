@@ -185,3 +185,7 @@ msgid ""
 "Generated automatically. Changing it requires updating the callback URLs in "
 "the Snappi portal."
 msgstr ""
+
+#: includes/class-snappi-for-woocommerce-gateway.php:37
+msgid "Use the same URL for both the callback field and the redirect field."
+msgstr ""

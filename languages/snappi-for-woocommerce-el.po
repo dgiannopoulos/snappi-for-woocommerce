@@ -264,3 +264,9 @@ msgid ""
 msgstr ""
 "Δημιουργείται αυτόματα. Η αλλαγή του απαιτεί ενημέρωση των callback URLs στο "
 "portal της Snappi."
+
+#: includes/class-snappi-for-woocommerce-gateway.php:37
+msgid "Use the same URL for both the callback field and the redirect field."
+msgstr ""
+"Χρησιμοποιήστε το ίδιο URL και στο πεδίο του callback και στο πεδίο της "
+"ανακατεύθυνσης."
