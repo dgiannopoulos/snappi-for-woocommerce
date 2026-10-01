@@ -4,7 +4,7 @@ Donate link: https://www.snappibank.com/
 Tags: ecommerce, woocommerce, payment gateway
 Requires at least: 4.6
 Tested up to: 6.9.1
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 Requires PHP: 7.0
 License: GNU General Public License v3.
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -35,10 +35,16 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
  - Website url: http(s)://www.domain.gr/
  - Referrer page: http(s)://www.domain.gr/checkout/
- - Success Callback/Redirect URL: http(s)://www.domain.gr/wc-api/WC_Snappi_Gateway?action=success&id={orderIdentifier}
- - Fail Callback/Redirect URL: http(s)://www.domain.gr/wc-api/WC_Snappi_Gateway?action=fail&id={orderIdentifier}
+ - Success Callback/Redirect URL και Fail Callback/Redirect URL: αντιγράψτε τα από τη σελίδα ρυθμίσεων του πρόσθετου (Ταμείο > Snappi Pay Later), όπου εμφανίζονται έτοιμα μαζί με το κλειδί ασφαλείας του καταστήματος.
 
 == Changelog ==
+
+= 1.0.8 =
+* Διόρθωση: Λανθασμένη αντιστοίχιση παραγγελίας στην επιβεβαίωση πληρωμής
+* Διόρθωση: Διπλή ολοκλήρωση πληρωμής σε επαναλαμβανόμενο callback
+* Νέο: Κλειδί ασφαλείας στα callback URLs
+* Βελτίωση: Μοναδικό orderIdentifier
+* Διόρθωση: Αποθήκευση requestId
 
 = 1.0.7 =
 * Διόρθωση: Κλείδωμα πετυχημένης παραγγελίας
