@@ -103,8 +103,6 @@ msgid "API environment"
 msgstr "Περιβάλλον"
 
 #: includes/class-snappi-for-woocommerce-gateway.php:92
-#, fuzzy
-#| msgid "API environment"
 msgid "Environment"
 msgstr "Περιβάλλον"
 
@@ -231,3 +229,44 @@ msgstr ""
 
 #~ msgid "Installments"
 #~ msgstr "Αριθμός δόσεων"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:36
+msgid "Register these two URLs in the Snappi portal exactly as shown:"
+msgstr "Καταχωρίστε αυτά τα δύο URLs στο portal της Snappi, ακριβώς όπως εμφανίζονται:"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:97
+msgid "Callback security key"
+msgstr "Κλειδί ασφαλείας callback"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:99
+msgid "Reject payment callbacks that do not carry this site's security key"
+msgstr ""
+"Απόρριψη των callbacks πληρωμής που δεν φέρουν το κλειδί ασφαλείας του "
+"καταστήματος"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:100
+msgid ""
+"Enable this only after the callback URLs shown above have been saved in the "
+"Snappi portal, otherwise every payment confirmation will be rejected."
+msgstr ""
+"Ενεργοποιήστε το μόνο αφού αποθηκεύσετε στο portal της Snappi τα callback "
+"URLs που εμφανίζονται παραπάνω, διαφορετικά κάθε επιβεβαίωση πληρωμής θα "
+"απορρίπτεται."
+
+#: includes/class-snappi-for-woocommerce-gateway.php:104
+msgid "Security key"
+msgstr "Κλειδί ασφαλείας"
+
+#: includes/class-snappi-for-woocommerce-gateway.php:106
+msgid ""
+"Generated automatically. Changing it requires updating the callback URLs in "
+"the Snappi portal."
+msgstr ""
+"Δημιουργείται αυτόματα. Η αλλαγή του απαιτεί ενημέρωση των callback URLs στο "
+"portal της Snappi."
+
+#: includes/class-snappi-for-woocommerce-gateway.php:37
+msgid "Use the same URL for both the callback field and the redirect field."
+msgstr ""
+"Χρησιμοποιήστε το ίδιο URL και στο πεδίο του callback και στο πεδίο της "
+"ανακατεύθυνσης."
